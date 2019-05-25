@@ -37,7 +37,7 @@ async function bootstrap() {
   app.useGlobalInterceptors(
     metricsInterceptor,
     loggerInterceptor, // Log exceptions
-    classSerializer,
+    // classSerializer,
   );
 
   const connfigService = app.select(ConfigModule).get(ConfigService);
@@ -48,6 +48,7 @@ async function bootstrap() {
   app.useGlobalGuards(new AuthGuard(reflector), rolesGuard);
 
   // Validators
+
   app.useGlobalPipes(
     new ValidatorPipe(), // Validate inputs
   );

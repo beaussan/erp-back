@@ -14,25 +14,23 @@ import { UserModule } from './modules/user/user.module';
 import { ConfigService } from './modules/core/config/config.service';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-import { RolesModule } from './modules/roles/roles.module';
 import { AuthModule } from './modules/core/auth/auth.module';
 import { PromModule } from './modules/core/metrics/metrics.module';
 import { InboundMiddleware } from './modules/core/metrics/middleware/inbound.middleware';
+import { MongooseModule } from '@nestjs/mongoose';
+import { MapperModule } from './modules/core/mapper/mapper.module';
 // needle-module-import
 
 @Module({
   imports: [
     ConfigModule, // Global
-    TypeOrmModule.forRootAsync({
+    MapperModule,
+    MongooseModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: async (
-        configService: ConfigService,
-      ): Promise<TypeOrmModuleOptions> => ({
-        type: 'postgres',
-        url: configService.databaseUrl,
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: true,
-        logging: configService.isLoggingDb ? 'all' : false,
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.mongodbUrl,
+        useNewUrlParser: true,
+        useCreateIndex: true,
       }),
       inject: [ConfigService],
     }),
@@ -45,7 +43,6 @@ import { InboundMiddleware } from './modules/core/metrics/middleware/inbound.mid
     RouterModule.forRoutes(appRoutes),
     AuthModule,
     UserModule,
-    RolesModule,
     // needle-module-includes
   ],
   controllers: [AppController],

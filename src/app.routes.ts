@@ -1,8 +1,7 @@
 import { Routes } from 'nest-router';
 
 import { UserModule } from './modules/user/user.module';
-import { RolesModule } from './modules/roles/roles.module';
-import { AuthController } from './modules/core/auth/auth.controller';
+import { AuthModule } from './modules/core/auth/auth.module';
 // needle-module-import
 
 export const appRoutes: Routes = [
@@ -11,12 +10,8 @@ export const appRoutes: Routes = [
     module: UserModule,
   },
   {
-    path: '/roles',
-    module: RolesModule,
-  },
-  {
     path: '/auth',
-    module: AuthController,
+    module: AuthModule,
   },
   // needle-modules-routes
 ];

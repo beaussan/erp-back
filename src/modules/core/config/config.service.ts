@@ -31,7 +31,7 @@ export class ConfigService {
       LOG_LEVEL: Joi.string()
         .valid(['error', 'warning', 'info', 'debug', 'silly'])
         .default('debug'),
-      DATABASE_URL: Joi.string().required(),
+      MONGODB_URL: Joi.string().required(),
       JWT_SECRET: Joi.string().required(),
       LOG_SQL_REQUEST: Joi.boolean().default(false),
     });
@@ -46,8 +46,8 @@ export class ConfigService {
     return validatedEnvConfig;
   }
 
-  get databaseUrl(): string {
-    return this.envConfig.DATABASE_URL;
+  get mongodbUrl(): string {
+    return this.envConfig.MONGODB_URL;
   }
 
   get jwtSecret(): string {

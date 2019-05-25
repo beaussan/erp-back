@@ -6,7 +6,6 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from './user.repository';
 // import {  } from './user.constants';
 import {
@@ -16,30 +15,28 @@ import {
 } from './user.dto';
 import { Optional } from 'typescript-optional';
 import { CryptoService } from '../core/crypto/crypto.service';
-import { Role } from '../roles/roles.entity';
-import { Roles } from '../../decorators/roles.decorator';
-import { USER_ROLE } from '../roles/roles.constants';
-import { RolesService } from '../roles/roles.service';
+import { USER_ROLE } from './roles.constants';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(UserRepository)
     private readonly userRepository: UserRepository,
     private readonly cryptoService: CryptoService,
-    private readonly rolesSercie: RolesService,
+    @InjectModel('User') private readonly userModel: Model<User>
   ) {}
 
   async getAll(): Promise<User[]> {
-    return this.userRepository.find({});
+    return this.userModel.find().exec();
   }
 
-  async getOneById(id: number): Promise<Optional<User>> {
-    return this.userRepository.findOneById(id);
+  async getOneById(id: string): Promise<Optional<User>> {
+    return Optional.of(await this.userModel.findById(id));
   }
 
   async getOnWithEmail(email: string): Promise<Optional<User>> {
-    return await this.userRepository.findOneWithEmail(email);
+    return Optional.of(await this.userModel.findOne({ email }).exec());
   }
 
   async doPasswordMatch(user: User, password: string): Promise<boolean> {
@@ -55,36 +52,33 @@ export class UserService {
       throw new ConflictException('Email already taken');
     }
 
-    let userNew = new User();
+    const hashedPwd = await this.cryptoService.hash(userRegister.password);
 
-    const userRole = await this.rolesSercie.getUserRole();
+    const userNew = new this.userModel({
+      password: hashedPwd,
+      email: userRegister.email,
+      lastName: userRegister.lastName,
+      firstName: userRegister.firstName,
+      roles: [USER_ROLE],
+    });
 
-    userNew.password = await this.cryptoService.hash(userRegister.password);
-    userNew.email = userRegister.email.toLowerCase();
-    userNew.lastName = userRegister.lastName;
-    userNew.firstName = userRegister.firstName;
-    userNew.roles = [userRole];
-
-    userNew = await this.userRepository.save(userNew);
-
+    await userNew.save();
     return userNew;
   }
 
-  async update(id: number, body: UserDtoUpdateInfo): Promise<User> {
-    let userFound = (await this.userRepository.findOneById(id)).orElseThrow(
+  async update(id: string, body: UserDtoUpdateInfo): Promise<User> {
+    const userFound = (await this.userRepository.findById(id)).orElseThrow(
       () => new NotFoundException(),
     );
-
-    userFound.firstName = body.firstName;
-    userFound.lastName = body.lastName;
-
-    userFound = await this.userRepository.save(userFound);
-
+    await userFound.update({
+      firstName: body.firstName,
+      lastName: body.lastName,
+    }).exec();
     return userFound;
   }
 
-  async updatePassword(id: number, body: UserDtoUpdatePassword): Promise<User> {
-    let userFound = (await this.userRepository.findOneById(id)).orElseThrow(
+  async updatePassword(id: string, body: UserDtoUpdatePassword): Promise<User> {
+    const userFound = (await this.userRepository.findById(id)).orElseThrow(
       () => new NotFoundException(),
     );
 
@@ -96,17 +90,18 @@ export class UserService {
       throw new BadRequestException('New passwords are not the same');
     }
 
-    userFound.password = await this.cryptoService.hash(body.newPassword);
+    const newPwd = await this.cryptoService.hash(body.newPassword);
 
-    userFound = await this.userRepository.save(userFound);
-
+    await userFound.update({
+      password: newPwd,
+    }).exec();
     return userFound;
   }
 
-  async deleteById(id: number): Promise<void> {
-    const userFound = (await this.userRepository.findOneById(id)).orElseThrow(
+  async deleteById(id: string): Promise<void> {
+    const userFound = (await this.userRepository.findById(id)).orElseThrow(
       () => new NotFoundException(),
     );
-    await this.userRepository.remove(userFound);
+    await this.userModel.findByIdAndDelete(userFound.id);
   }
 }

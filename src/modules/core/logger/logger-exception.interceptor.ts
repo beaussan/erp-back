@@ -34,6 +34,7 @@ export class LoggerExceptionInterceptor implements NestInterceptor {
             );
           }
         } else {
+          console.error(exception);
           this.loggerService.error('Unexpected error', request.path, exception);
         }
         throw exception;

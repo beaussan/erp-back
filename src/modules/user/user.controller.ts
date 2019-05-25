@@ -12,7 +12,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { User } from './user.entity';
+import { isAdmin, User, UserSchema } from './user.entity';
 import { UserService } from './user.service';
 import {
   ApiBearerAuth,
@@ -27,8 +27,8 @@ import {
 } from './user.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Roles } from '../../decorators/roles.decorator';
-import { ADMIN_ROLE } from '../roles/roles.constants';
 import { CurrentUser } from '../../decorators/currentUser.decorator';
+import { ADMIN_ROLE } from './roles.constants';
 
 @ApiUseTags('User')
 @Controller()
@@ -40,19 +40,18 @@ export class UserController {
   @ApiResponse({
     status: 200,
     description: 'Get a list of all User.',
-    type: User,
+    type: UserSchema,
     isArray: true,
   })
   @Roles(ADMIN_ROLE)
-  getAll(): Promise<User[]> {
-    return this.userService.getAll();
+  async getAll(): Promise<User[]> {
+    return await this.userService.getAll();
   }
 
   @Post()
   @ApiResponse({
     status: 201,
     description: 'The User has been created.',
-    type: User,
   })
   @Roles(ADMIN_ROLE)
   saveNew(@Body() userDto: UserDtoRegister): Promise<User> {
@@ -63,55 +62,51 @@ export class UserController {
   @ApiResponse({
     status: 200,
     description: 'The User with the matching id',
-    type: User,
   })
   @ApiResponse({ status: 404, description: 'Not found.' })
   async findOne(
-    @Param('id', new ParseIntPipe()) id: number,
+    @Param('id') id: string,
     @CurrentUser() user: User,
   ): Promise<User> {
-    if (!user.isAdmin() && user.id !== id) {
+    if (!isAdmin(user) && user.id !== id) {
       throw new ForbiddenException();
     }
-    return (await this.userService.getOneById(id)).orElseThrow(
-      () => new NotFoundException(),
-    );
+    return (await this.userService.getOneById(id))
+      .orElseThrow(() => new NotFoundException());
   }
 
   @Put(':id')
   @ApiResponse({
     status: 200,
     description: 'The updated User with the matching id',
-    type: User,
   })
   @ApiResponse({ status: 404, description: 'Not found.' })
   async updateOne(
-    @Param('id', new ParseIntPipe()) id: number,
+    @Param('id') id: string,
     @Body() userDto: UserDtoUpdateInfo,
     @CurrentUser() user: User,
   ): Promise<User> {
-    if (!user.isAdmin() && user.id !== id) {
+    if (!isAdmin(user)  && user.id !== id) {
       throw new ForbiddenException();
     }
-    return this.userService.update(id, userDto);
+    return await this.userService.update(id, userDto);
   }
 
   @Put(':id/password')
   @ApiResponse({
     status: 200,
     description: 'The updated User with the matching id',
-    type: User,
   })
   @ApiResponse({ status: 404, description: 'Not found.' })
   async updateOnePassword(
-    @Param('id', new ParseIntPipe()) id: number,
+    @Param('id') id: string,
     @Body() userDto: UserDtoUpdatePassword,
     @CurrentUser() user: User,
   ): Promise<User> {
-    if (!user.isAdmin() && user.id !== id) {
+    if (!isAdmin(user)  && user.id !== id) {
       throw new ForbiddenException();
     }
-    return this.userService.updatePassword(id, userDto);
+    return await this.userService.updatePassword(id, userDto);
   }
 
   @Delete(':id')
@@ -121,10 +116,10 @@ export class UserController {
   })
   @ApiResponse({ status: 404, description: 'Not found.' })
   async deleteOne(
-    @Param('id', new ParseIntPipe()) id: number,
+    @Param('id') id: string,
     @CurrentUser() user: User,
   ): Promise<void> {
-    if (!user.isAdmin() && user.id !== id) {
+    if (!isAdmin(user)  && user.id !== id) {
       throw new ForbiddenException();
     }
     await this.userService.deleteById(id);

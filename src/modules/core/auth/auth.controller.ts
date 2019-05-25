@@ -1,5 +1,5 @@
-import { ApiUseTags, ApiBearerAuth } from '@nestjs/swagger';
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiUseTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { LoginDto, TokenDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { User } from '../../user/user.entity';
@@ -29,7 +29,7 @@ export class AuthController {
   @Public()
   @Post('register')
   async registerUser(@Body() userRegister: UserDtoRegister): Promise<User> {
-    return this.userService.saveNew(userRegister);
+    return await this.userService.saveNew(userRegister);
   }
 
   @Get('me')
