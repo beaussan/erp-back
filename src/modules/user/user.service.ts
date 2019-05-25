@@ -6,7 +6,6 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { UserRepository } from './user.repository';
 // import {  } from './user.constants';
 import {
   UserDtoRegister,
@@ -22,9 +21,8 @@ import { Model } from 'mongoose';
 @Injectable()
 export class UserService {
   constructor(
-    private readonly userRepository: UserRepository,
     private readonly cryptoService: CryptoService,
-    @InjectModel('User') private readonly userModel: Model<User>
+    @InjectModel('User') private readonly userModel: Model<User>,
   ) {}
 
   async getAll(): Promise<User[]> {
@@ -43,12 +41,16 @@ export class UserService {
     return this.cryptoService.compare(password, user.password);
   }
 
+  async hasUserWithMatchingEmail(email: string): Promise<boolean> {
+    return (await this.userModel.countDocuments({ email }).exec()) === 1;
+  }
+
+  async findById(id: string): Promise<Optional<User>> {
+    return Optional.of(await this.userModel.findById(id));
+  }
+
   async saveNew(userRegister: UserDtoRegister): Promise<User> {
-    if (
-      await this.userRepository.hasUserWithMatchingEmail(
-        userRegister.email.toLowerCase(),
-      )
-    ) {
+    if (await this.hasUserWithMatchingEmail(userRegister.email.toLowerCase())) {
       throw new ConflictException('Email already taken');
     }
 
@@ -67,18 +69,20 @@ export class UserService {
   }
 
   async update(id: string, body: UserDtoUpdateInfo): Promise<User> {
-    const userFound = (await this.userRepository.findById(id)).orElseThrow(
+    const userFound = (await this.findById(id)).orElseThrow(
       () => new NotFoundException(),
     );
-    await userFound.update({
-      firstName: body.firstName,
-      lastName: body.lastName,
-    }).exec();
+    await userFound
+      .update({
+        firstName: body.firstName,
+        lastName: body.lastName,
+      })
+      .exec();
     return userFound;
   }
 
   async updatePassword(id: string, body: UserDtoUpdatePassword): Promise<User> {
-    const userFound = (await this.userRepository.findById(id)).orElseThrow(
+    const userFound = (await this.findById(id)).orElseThrow(
       () => new NotFoundException(),
     );
 
@@ -92,14 +96,16 @@ export class UserService {
 
     const newPwd = await this.cryptoService.hash(body.newPassword);
 
-    await userFound.update({
-      password: newPwd,
-    }).exec();
+    await userFound
+      .update({
+        password: newPwd,
+      })
+      .exec();
     return userFound;
   }
 
   async deleteById(id: string): Promise<void> {
-    const userFound = (await this.userRepository.findById(id)).orElseThrow(
+    const userFound = (await this.findById(id)).orElseThrow(
       () => new NotFoundException(),
     );
     await this.userModel.findByIdAndDelete(userFound.id);

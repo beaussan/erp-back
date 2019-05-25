@@ -71,8 +71,9 @@ export class UserController {
     if (!isAdmin(user) && user.id !== id) {
       throw new ForbiddenException();
     }
-    return (await this.userService.getOneById(id))
-      .orElseThrow(() => new NotFoundException());
+    return (await this.userService.getOneById(id)).orElseThrow(
+      () => new NotFoundException(),
+    );
   }
 
   @Put(':id')
@@ -86,7 +87,7 @@ export class UserController {
     @Body() userDto: UserDtoUpdateInfo,
     @CurrentUser() user: User,
   ): Promise<User> {
-    if (!isAdmin(user)  && user.id !== id) {
+    if (!isAdmin(user) && user.id !== id) {
       throw new ForbiddenException();
     }
     return await this.userService.update(id, userDto);
@@ -103,7 +104,7 @@ export class UserController {
     @Body() userDto: UserDtoUpdatePassword,
     @CurrentUser() user: User,
   ): Promise<User> {
-    if (!isAdmin(user)  && user.id !== id) {
+    if (!isAdmin(user) && user.id !== id) {
       throw new ForbiddenException();
     }
     return await this.userService.updatePassword(id, userDto);
@@ -119,7 +120,7 @@ export class UserController {
     @Param('id') id: string,
     @CurrentUser() user: User,
   ): Promise<void> {
-    if (!isAdmin(user)  && user.id !== id) {
+    if (!isAdmin(user) && user.id !== id) {
       throw new ForbiddenException();
     }
     await this.userService.deleteById(id);
