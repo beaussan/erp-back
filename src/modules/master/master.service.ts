@@ -8,12 +8,32 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Master } from './master.entity';
 import { Optional } from 'typescript-optional';
+import { MasterCreateDto } from './master.dto';
 
 @Injectable()
 export class MasterService {
   constructor(
     @InjectModel('Master') private readonly masterModel: Model<Master>,
   ) {}
+
+  async saveNew(masterCreate: MasterCreateDto): Promise<Master> {
+    const master = new this.masterModel({
+      name: masterCreate.name,
+      description: masterCreate.description,
+    });
+    return await master.save();
+  }
+
+  async updateOne(id: string, masterUpdate: MasterCreateDto): Promise<Master> {
+    const masterFound = (await this.findById(id)).orElseThrow(
+      () => new NotFoundException(),
+    );
+    await masterFound.update({
+      name: masterFound.name,
+      description: masterFound.description,
+    });
+    return masterFound;
+  }
 
   async getAll(): Promise<Master[]> {
     return this.masterModel.find().exec();

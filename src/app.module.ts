@@ -19,6 +19,7 @@ import { PromModule } from './modules/core/metrics/metrics.module';
 import { InboundMiddleware } from './modules/core/metrics/middleware/inbound.middleware';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MapperModule } from './modules/core/mapper/mapper.module';
+import { MasterModule } from './modules/master/master.module';
 // needle-module-import
 
 @Module({
@@ -43,6 +44,7 @@ import { MapperModule } from './modules/core/mapper/mapper.module';
     RouterModule.forRoutes(appRoutes),
     AuthModule,
     UserModule,
+    MasterModule,
     // needle-module-includes
   ],
   controllers: [AppController],
