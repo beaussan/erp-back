@@ -1,0 +1,346 @@
+{
+  "schoolYear": "2018/2019",
+  "years": [
+    {
+      "level": "Master 1",
+      "semesters": [
+        {
+          "number": 1,
+          "modules": [
+            {
+              "name": "UE : M701",
+              "courses": [
+                {
+                  "name": "Bases de données (SQL)",
+                  "nmbGroupTd": 1,
+                  "nmbAmphiHour": 12,
+                  "nmbTdHour": 12,
+                  "coefCC": 50,
+                  "coefExam": 50,
+                  "lengthExam": 0,
+                  "nmbEcts": 3,
+                  "examType": "Pdt cours",
+                  "courseEnglish": false,
+                  "englishTranslation": "Advanced databases",
+                  "ratrappage": true
+                },
+                {
+                  "name": "Intelligence artificielle",
+                  "nmbGroupTd": 1,
+                  "nmbAmphiHour": 12,
+                  "nmbTdHour": 12,
+                  "coefCC": 50,
+                  "coefExam": 50,
+                  "lengthExam": 2,
+                  "nmbEcts": 3,
+                  "examType": "Ecrit",
+                  "courseEnglish": false,
+                  "englishTranslation": "",
+                  "ratrappage": true
+                },
+                {
+                  "name": "Réseaux",
+                  "nmbGroupTd": 1,
+                  "nmbAmphiHour": 12,
+                  "nmbTdHour": 12,
+                  "coefCC": 50,
+                  "coefExam": 50,
+                  "lengthExam": 2,
+                  "nmbEcts": 3,
+                  "examType": "Ecrit",
+                  "courseEnglish": false,
+                  "englishTranslation": "Networks",
+                  "ratrappage": true
+                }
+              ]
+            },
+            {
+              "name": "UE : M702",
+              "courses": [
+                {
+                  "name": "Conception d'applications réparties 1",
+                  "nmbGroupTd": 1,
+                  "nmbAmphiHour": 12,
+                  "nmbTdHour": 12,
+                  "coefCC": 50,
+                  "coefExam": 50,
+                  "lengthExam": 2,
+                  "nmbEcts": 3,
+                  "examType": "sur PC",
+                  "courseEnglish": false,
+                  "englishTranslation": "NET programming 1",
+                  "ratrappage": true
+                },
+                {
+                  "name": "C++",
+                  "nmbGroupTd": 1,
+                  "nmbAmphiHour": 12,
+                  "nmbTdHour": 12,
+                  "coefCC": 100,
+                  "coefExam": 0,
+                  "lengthExam": 0,
+                  "nmbEcts": 4,
+                  "examType": "",
+                  "courseEnglish": false,
+                  "englishTranslation": "C++ programming",
+                  "ratrappage": false
+                },
+                {
+                  "name": "JEE 1",
+                  "nmbGroupTd": 1,
+                  "nmbAmphiHour": 12,
+                  "nmbTdHour": 12,
+                  "coefCC": 50,
+                  "coefExam": 50,
+                  "lengthExam": 2,
+                  "nmbEcts": 3,
+                  "examType": "Ecrit",
+                  "courseEnglish": false,
+                  "englishTranslation": "JEE programming",
+                  "ratrappage": true
+                }
+              ]
+            },
+            {
+              "name": "UE : M703",
+              "courses": [
+                {
+                  "name": "Projet de groupe",
+                  "nmbGroupTd": 1,
+                  "nmbAmphiHour": 0,
+                  "nmbTdHour": 20,
+                  "coefCC": 100,
+                  "coefExam": 0,
+                  "lengthExam": 0,
+                  "nmbEcts": 3,
+                  "examType": "",
+                  "courseEnglish": false,
+                  "englishTranslation": "Group projects",
+                  "ratrappage": false
+                },
+                {
+                  "name": "Jeu d'entreprise",
+                  "nmbGroupTd": 1,
+                  "nmbAmphiHour": 0,
+                  "nmbTdHour": 18,
+                  "coefCC": 100,
+                  "coefExam": 0,
+                  "lengthExam": 0,
+                  "nmbEcts": 2,
+                  "examType": "",
+                  "courseEnglish": false,
+                  "englishTranslation": "Business Game",
+                  "ratrappage": false
+                },
+                {
+                  "name": "Marketing appliqué à l'informatique",
+                  "nmbGroupTd": 1,
+                  "nmbAmphiHour": 12,
+                  "nmbTdHour": 12,
+                  "coefCC": 60,
+                  "coefExam": 40,
+                  "lengthExam": 2,
+                  "nmbEcts": 2,
+                  "examType": "ecrit",
+                  "courseEnglish": false,
+                  "englishTranslation": "",
+                  "ratrappage": true
+                },
+                {
+                  "name": "Anglais",
+                  "nmbGroupTd": 1,
+                  "nmbAmphiHour": 10,
+                  "nmbTdHour": 12,
+                  "coefCC": 100,
+                  "coefExam": 0,
+                  "lengthExam": 0,
+                  "nmbEcts": 3,
+                  "examType": "",
+                  "courseEnglish": true,
+                  "englishTranslation": "English",
+                  "ratrappage": false
+                },
+                {
+                  "name": "Développement personnel",
+                  "nmbGroupTd": 1,
+                  "nmbAmphiHour": 0,
+                  "nmbTdHour": 7,
+                  "coefCC": 100,
+                  "coefExam": 0,
+                  "lengthExam": 0,
+                  "nmbEcts": 1,
+                  "examType": "",
+                  "courseEnglish": false,
+                  "englishTranslation": "Personal development",
+                  "ratrappage": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "modules": [
+            {
+              "name": "UE : M801",
+              "courses": [
+                {
+                  "name": "Aide à la décision",
+                  "nmbGroupTd": 1,
+                  "nmbAmphiHour": 12,
+                  "nmbTdHour": 12,
+                  "coefCC": 50,
+                  "coefExam": 50,
+                  "lengthExam": 2,
+                  "nmbEcts": 2,
+                  "examType": "Ecrit",
+                  "courseEnglish": false,
+                  "englishTranslation": "",
+                  "ratrappage": true
+                },
+                {
+                  "name": "BI / Big Data",
+                  "nmbGroupTd": 1,
+                  "nmbAmphiHour": 12,
+                  "nmbTdHour": 12,
+                  "coefCC": 50,
+                  "coefExam": 50,
+                  "lengthExam": 2,
+                  "nmbEcts": 3,
+                  "examType": "Pdt cours",
+                  "courseEnglish": false,
+                  "englishTranslation": "BI / Big Data",
+                  "ratrappage": true
+                },
+                {
+                  "name": "Management de l'innovation",
+                  "nmbGroupTd": 1,
+                  "nmbAmphiHour": 12,
+                  "nmbTdHour": 12,
+                  "coefCC": 100,
+                  "coefExam": 0,
+                  "lengthExam": 2,
+                  "nmbEcts": 2,
+                  "examType": "",
+                  "courseEnglish": false,
+                  "englishTranslation": "",
+                  "ratrappage": true
+                }
+              ]
+            },
+            {
+              "name": "UE : M802",
+              "courses": [
+                {
+                  "name": "Aide à la décision",
+                  "nmbGroupTd": 1,
+                  "nmbAmphiHour": 12,
+                  "nmbTdHour": 12,
+                  "coefCC": 50,
+                  "coefExam": 50,
+                  "lengthExam": 2,
+                  "nmbEcts": 2,
+                  "examType": "Ecrit",
+                  "courseEnglish": false,
+                  "englishTranslation": "Group project",
+                  "ratrappage": true
+                }
+              ]
+            },
+            {
+              "name": "UE : M803",
+              "courses": [
+                {
+                  "name": "Aide à la décision",
+                  "nmbGroupTd": 1,
+                  "nmbAmphiHour": 12,
+                  "nmbTdHour": 12,
+                  "coefCC": 50,
+                  "coefExam": 50,
+                  "lengthExam": 2,
+                  "nmbEcts": 2,
+                  "examType": "Ecrit",
+                  "courseEnglish": false,
+                  "englishTranslation": "Group project",
+                  "ratrappage": true
+                }
+              ]
+            },
+            {
+              "name": "UE : M804",
+              "courses": [
+                {
+                  "name": "Aide à la décision",
+                  "nmbGroupTd": 1,
+                  "nmbAmphiHour": 12,
+                  "nmbTdHour": 12,
+                  "coefCC": 50,
+                  "coefExam": 50,
+                  "lengthExam": 2,
+                  "nmbEcts": 2,
+                  "examType": "Ecrit",
+                  "courseEnglish": false,
+                  "englishTranslation": "Group project",
+                  "ratrappage": true
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "extras": [
+        {
+          "name": "Integration",
+          "items": [
+            {
+              "name": "Rentrée",
+              "hour": 2,
+              "date": "17/09 Matin"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "Master 2",
+      "semesters": [
+        {
+          "number": 2,
+          "modules": [
+            {
+              "name": "UE : M801",
+              "courses": [
+                {
+                  "name": "Projet de groupe",
+                  "nmbGroupTd": 1,
+                  "nmbAmphiHour": 20,
+                  "nmbTdHour": 10,
+                  "coefCC": 30,
+                  "coefExam": 70,
+                  "lengthExam": 2,
+                  "nmbEcts": 2,
+                  "examType": "Soutenance + dossier",
+                  "courseEnglish": false,
+                  "englishTranslation": "Group project",
+                  "ratrappage": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "extras": [
+        {
+          "name": "Integration",
+          "items": [
+            {
+              "name": "Rentrée",
+              "hour": 2,
+              "date": "17/09 Matin"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

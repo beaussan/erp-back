@@ -20,6 +20,7 @@ import { InboundMiddleware } from './modules/core/metrics/middleware/inbound.mid
 import { MongooseModule } from '@nestjs/mongoose';
 import { MapperModule } from './modules/core/mapper/mapper.module';
 import { MasterModule } from './modules/master/master.module';
+import { MaquetteModule } from './modules/maquette/maquette.module';
 // needle-module-import
 
 @Module({
@@ -44,6 +45,7 @@ import { MasterModule } from './modules/master/master.module';
     RouterModule.forRoutes(appRoutes),
     AuthModule,
     UserModule,
+    MaquetteModule,
     MasterModule,
     // needle-module-includes
   ],

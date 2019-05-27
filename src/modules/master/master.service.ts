@@ -9,11 +9,12 @@ import { Model } from 'mongoose';
 import { Master } from './master.entity';
 import { Optional } from 'typescript-optional';
 import { MasterCreateDto } from './master.dto';
+import { DB_REF_MASTER } from '../../constants';
 
 @Injectable()
 export class MasterService {
   constructor(
-    @InjectModel('Master') private readonly masterModel: Model<Master>,
+    @InjectModel(DB_REF_MASTER) private readonly masterModel: Model<Master>,
   ) {}
 
   async saveNew(masterCreate: MasterCreateDto): Promise<Master> {

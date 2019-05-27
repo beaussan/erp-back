@@ -3,10 +3,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { MasterSchema } from './master.entity';
 import { MasterController } from './master.controller';
 import { MasterService } from './master.service';
+import { DB_REF_MASTER } from '../../constants';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: 'Master', schema: MasterSchema }]),
+    MongooseModule.forFeature([{ name: DB_REF_MASTER, schema: MasterSchema }]),
   ],
   controllers: [MasterController],
   providers: [MasterService],

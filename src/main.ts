@@ -64,6 +64,7 @@ async function bootstrap() {
   SwaggerModule.setup('/docs', app, document);
 
   const server = await app.listen(connfigService.port);
+  app.use('/docs-json', (req, res, next) => res.send(document));
   app
     .get(LoggerService)
     .info(`Application is listening on port ${connfigService.port}.`);

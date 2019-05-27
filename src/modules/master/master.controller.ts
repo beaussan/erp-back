@@ -23,7 +23,6 @@ export class MasterController {
   @ApiResponse({
     status: 200,
     description: 'Get a list of all masters.',
-    type: MasterSchema,
     isArray: true,
   })
   async getAll(): Promise<Master[]> {

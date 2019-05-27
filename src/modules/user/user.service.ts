@@ -17,12 +17,13 @@ import { CryptoService } from '../core/crypto/crypto.service';
 import { USER_ROLE } from './roles.constants';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { DB_REF_USRE } from '../../constants';
 
 @Injectable()
 export class UserService {
   constructor(
     private readonly cryptoService: CryptoService,
-    @InjectModel('User') private readonly userModel: Model<User>,
+    @InjectModel(DB_REF_USRE) private readonly userModel: Model<User>,
   ) {}
 
   async getAll(): Promise<User[]> {
@@ -30,11 +31,11 @@ export class UserService {
   }
 
   async getOneById(id: string): Promise<Optional<User>> {
-    return Optional.of(await this.userModel.findById(id));
+    return Optional.ofNullable(await this.userModel.findById(id));
   }
 
   async getOnWithEmail(email: string): Promise<Optional<User>> {
-    return Optional.of(await this.userModel.findOne({ email }).exec());
+    return Optional.ofNullable(await this.userModel.findOne({ email }).exec());
   }
 
   async doPasswordMatch(user: User, password: string): Promise<boolean> {
@@ -46,7 +47,7 @@ export class UserService {
   }
 
   async findById(id: string): Promise<Optional<User>> {
-    return Optional.of(await this.userModel.findById(id));
+    return Optional.ofNullable(await this.userModel.findById(id));
   }
 
   async saveNew(userRegister: UserDtoRegister): Promise<User> {
