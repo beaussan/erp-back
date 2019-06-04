@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import * as Joi from '@hapi/joi';
-import { parse } from 'dotenv';
+import { config as parseConfig } from 'dotenv';
 import * as fs from 'fs';
 
 interface EnvConfig {
@@ -12,8 +12,11 @@ export class ConfigService {
   private readonly envConfig: EnvConfig;
 
   constructor() {
-    const config = parse(fs.readFileSync('.env'));
-    this.envConfig = this.validateInput(config);
+    try {
+      parseConfig();
+    } catch (e) {}
+
+    this.envConfig = this.validateInput(process.env);
   }
 
   /**
