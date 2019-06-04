@@ -42,6 +42,9 @@ export class ConfigService {
     const { error, value: validatedEnvConfig } = Joi.validate(
       envConfig,
       envVarsSchema,
+      {
+        stripUnknown: true,
+      },
     );
     if (error) {
       throw new Error(`Config validation error: ${error.message}`);
