@@ -22,7 +22,7 @@ import { AuthController } from './auth.controller';
       ): Promise<JwtModuleOptions> => ({
         secretOrPrivateKey: configService.jwtSecret,
         signOptions: {
-          expiresIn: 3600,
+          expiresIn: 36000,
         },
       }),
     }),
