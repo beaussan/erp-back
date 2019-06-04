@@ -33,16 +33,16 @@ jobs:
   ##########################################################################
   #  BACK SPECIFIC
   ##########################################################################
-  back-test-unit:
-    docker:
-      - image: circleci/node:dubnium-browsers
-    working_directory: ~/repo
-    steps:
-      - checkout
-      - restore_cache:
-          key: $CACHE_VERSION-dependencies-{{ checksum "package.json" }}
-      - run: yarn test:ci
-      - run: yarn add codecov && yarn codecov
+#  back-test-unit:
+#    docker:
+#      - image: circleci/node:dubnium-browsers
+#    working_directory: ~/repo
+#    steps:
+#      - checkout
+#      - restore_cache:
+#          key: $CACHE_VERSION-dependencies-{{ checksum "package.json" }}
+#      - run: yarn test:ci
+#      - run: yarn add codecov && yarn codecov
   back-test-e2e:
     docker:
       - image: circleci/node:dubnium-browsers
@@ -89,9 +89,9 @@ workflows:
   build-test-and-lint:
     jobs:
       - build
-      - back-test-unit:
-          requires:
-            - build
+#      - back-test-unit:
+#          requires:
+#            - build
       - back-test-e2e:
           requires:
             - build
