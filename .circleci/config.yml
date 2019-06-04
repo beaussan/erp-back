@@ -46,7 +46,7 @@ jobs:
   back-test-e2e:
     docker:
       - image: circleci/node:dubnium-browsers
-      - image: circleci/mongo:3.4.4
+      - image: circleci/mongo:latest
     working_directory: ~/repo
     steps:
       - checkout
