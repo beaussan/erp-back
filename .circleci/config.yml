@@ -46,11 +46,7 @@ jobs:
   back-test-e2e:
     docker:
       - image: circleci/node:dubnium-browsers
-      - image: bitnami/mongodb:latest
-        environment:
-          MONGODB_USERNAME: onionBoilerplate
-          MONGODB_PASSWORD: someNotSecurePassword
-          MONGODB_DATABASE: erp
+      - image: circleci/mongo:3.4.4
     working_directory: ~/repo
     steps:
       - checkout
