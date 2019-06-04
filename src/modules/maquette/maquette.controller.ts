@@ -41,10 +41,6 @@ export class MaquetteController {
     status: 201,
     description: 'The maquette created',
   })
-  @ApiImplicitBody({
-    type: MaquetteDTO,
-    name: 'The maquette',
-  })
   saveNew(@Body() maquetteDto: MaquetteDTO): Promise<Maquette> {
     return this.maquetteService.saveNew(maquetteDto);
   }

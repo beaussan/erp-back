@@ -44,7 +44,7 @@ export class MasterService {
     return Optional.of(await this.masterModel.findById(id));
   }
 
-  async findById(id: string): Promise<Optional<Master>> {
+  async findById(id: any): Promise<Optional<Master>> {
     return Optional.of(await this.masterModel.findById(id));
   }
 

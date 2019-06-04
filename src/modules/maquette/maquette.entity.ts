@@ -1,4 +1,4 @@
-import { Document, Schema } from 'mongoose';
+import { Document, Schema, Types } from 'mongoose';
 import { DB_REF_MASTER } from '../../constants';
 import { Master } from '../master/master.entity';
 
@@ -34,22 +34,37 @@ const ModuleSchema = new Schema({
 });
 
 ModuleSchema.virtual('ects').get(function() {
+  if (!this.courses) {
+    return 0;
+  }
   return this.courses.reduce((prev, curr) => prev + curr.nmbEcts, 0);
 });
 
 ModuleSchema.virtual('totalEtu').get(function() {
+  if (!this.courses) {
+    return 0;
+  }
   return this.courses.reduce((prev, curr) => prev + curr.totalEtu, 0);
 });
 
 ModuleSchema.virtual('totalTD').get(function() {
+  if (!this.courses) {
+    return 0;
+  }
   return this.courses.reduce((prev, curr) => prev + curr.nmbGroupTd, 0);
 });
 
 ModuleSchema.virtual('totalAmphi').get(function() {
+  if (!this.courses) {
+    return 0;
+  }
   return this.courses.reduce((prev, curr) => prev + curr.nmbAmphiHour, 0);
 });
 
 ModuleSchema.virtual('totalExam').get(function() {
+  if (!this.courses) {
+    return 0;
+  }
   return this.courses.reduce((prev, curr) => prev + curr.lengthExam, 0);
 });
 ModuleSchema.set('toObject', { virtuals: true });
@@ -61,22 +76,37 @@ const SemesterSchema = new Schema({
 });
 
 SemesterSchema.virtual('totalEtu').get(function() {
+  if (!this.modules) {
+    return 0;
+  }
   return this.modules.reduce((prev, curr) => prev + curr.totalEtu, 0);
 });
 
 SemesterSchema.virtual('ects').get(function() {
+  if (!this.modules) {
+    return 0;
+  }
   return this.modules.reduce((prev, curr) => prev + curr.ects, 0);
 });
 
 SemesterSchema.virtual('totalTD').get(function() {
+  if (!this.modules) {
+    return 0;
+  }
   return this.modules.reduce((prev, curr) => prev + curr.totalTD, 0);
 });
 
 SemesterSchema.virtual('totalAmphi').get(function() {
+  if (!this.modules) {
+    return 0;
+  }
   return this.modules.reduce((prev, curr) => prev + curr.totalAmphi, 0);
 });
 
 SemesterSchema.virtual('totalExam').get(function() {
+  if (!this.modules) {
+    return 0;
+  }
   return this.modules.reduce((prev, curr) => prev + curr.totalExam, 0);
 });
 SemesterSchema.set('toObject', { virtuals: true });
@@ -106,6 +136,9 @@ const YearSchema = new Schema({
 });
 
 YearSchema.virtual('totalHour').get(function() {
+  if (!this.semesters || !this.extras) {
+    return 0;
+  }
   const totalExam = this.semesters.reduce(
     (prev, curr) => prev + curr.totalExam,
     0,
@@ -126,7 +159,7 @@ YearSchema.set('toJSON', { virtuals: true });
 export const MaquetteSchema = new Schema({
   schoolYear: { type: String, required: true },
   inProduction: { type: Boolean, default: false },
-  f: { type: Schema.Types.ObjectId, ref: DB_REF_MASTER },
+  master: { type: Schema.Types.ObjectId, ref: DB_REF_MASTER },
   years: [YearSchema],
 });
 MaquetteSchema.set('toObject', { virtuals: true });
@@ -135,7 +168,7 @@ MaquetteSchema.set('toJSON', { virtuals: true });
 export interface Maquette extends Document {
   readonly schoolYear: string;
   readonly inProduction: boolean;
-  readonly master: Master;
+  readonly master: Master | Schema.Types.ObjectId;
   readonly years: [
     {
       readonly totalHour: number;

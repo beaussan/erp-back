@@ -10,22 +10,49 @@ import { Master } from '../master/master.entity';
 import { MaquetteDTO } from './maquette.dto';
 import { Maquette } from './maquette.entity';
 import { Optional } from 'typescript-optional';
+import { MasterService } from '../master/master.service';
+import * as _ from 'lodash';
+
+const reduceChain = (inArray: any[], keys: string[]) =>
+  keys.reduce(
+    (prev, curr) =>
+      prev.reduce(
+        (prev2, curr2) => [...prev2, ...(_.get(curr2, curr) || [])],
+        [],
+      ),
+    inArray,
+  );
 
 @Injectable()
 export class MaquetteService {
   constructor(
     @InjectModel(DB_REF_MAQUETTE)
     private readonly maquetteModel: Model<Maquette>,
+    private readonly masterService: MasterService,
   ) {}
 
   async saveNew(maquetteCreate: MaquetteDTO): Promise<Maquette> {
-    const master = new this.maquetteModel(maquetteCreate);
-    await master.save();
-    return master;
+    const master = (await this.masterService.findById(
+      maquetteCreate.master,
+    )).orElseThrow(() => new NotFoundException('Master not found'));
+    let maquette = new this.maquetteModel({
+      ...maquetteCreate,
+    });
+    maquette = await maquette.save();
+    await master.update({
+      maquettes: [...master.maquettes, maquette.id],
+    });
+    return maquette;
   }
 
   async updateOne(id: string, maquetteUpdate: MaquetteDTO): Promise<Maquette> {
-    const maquette = (await this.findById(id)).orElseThrow(
+    let newMaster;
+    if (maquetteUpdate.master) {
+      newMaster = (await this.masterService.findById(
+        maquetteUpdate.master,
+      )).orElseThrow(() => new NotFoundException('Master not found'));
+    }
+    let maquette = (await this.findById(id)).orElseThrow(
       () => new NotFoundException(),
     );
     if (maquette.inProduction) {
@@ -33,8 +60,19 @@ export class MaquetteService {
         'This maquette is locked since it is used in production',
       );
     }
-    await maquette.update(maquetteUpdate).exec();
-    return this.maquetteModel.findById(id).exec();
+    if (newMaster && maquette.master !== newMaster.id) {
+      newMaster.updateOne({
+        maquettes: [...newMaster.maquettes, maquette.id],
+      });
+      const oldMaster = (await this.masterService.findById(
+        maquette.master,
+      )).get();
+      await oldMaster.update({
+        maquettes: oldMaster.maquettes.filter(val => val !== maquette.id),
+      });
+    }
+    maquette = await maquette.update(maquetteUpdate).exec();
+    return maquette;
   }
 
   async lockById(id: string): Promise<Maquette> {
@@ -61,12 +99,28 @@ export class MaquetteService {
     return this.maquetteModel.findById(id).exec();
   }
 
-  async findById(id: string): Promise<Optional<Maquette>> {
-    return Optional.of(await this.maquetteModel.findById(id));
+  async findById(id: any): Promise<Optional<Maquette>> {
+    return Optional.of(
+      await this.maquetteModel
+        .findById(id)
+        .populate('master')
+        .exec(),
+    );
   }
 
   async getAll(): Promise<Maquette[]> {
-    return this.maquetteModel.find().exec();
+    /*
+    const test = await this.maquetteModel
+      .find()
+      .select('years.semesters.modules.courses')
+      .exec();
+    console.log(test);
+    console.log(reduceChain(test, ['years', 'semesters', 'modules', 'courses']));
+     */
+    return this.maquetteModel
+      .find()
+      .populate('master')
+      .exec();
   }
 
   async deleteOne(id: string): Promise<Maquette> {

@@ -131,7 +131,9 @@ export class MaquetteDTO {
   @IsString()
   schoolYear: string;
 
-  @IsString() masterId: string;
+  @ApiModelProperty({ example: 'idmaster' })
+  @IsString()
+  master: string;
 
   @ApiModelProperty({ isArray: true, type: YearDTO })
   @IsArray()

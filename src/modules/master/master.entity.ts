@@ -6,10 +6,13 @@ export const MasterSchema = new Schema({
   description: { type: String, required: true },
   maquettes: [{ type: Schema.Types.ObjectId, ref: DB_REF_MAQUETTE }],
 });
+MasterSchema.set('toObject', { virtuals: true });
+MasterSchema.set('toJSON', { virtuals: true });
 
 export interface Master extends Document {
   readonly name: string;
   readonly description: string;
+  readonly maquettes: any[];
 }
 
 /*
