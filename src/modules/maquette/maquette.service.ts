@@ -72,7 +72,7 @@ export class MaquetteService {
       });
     }
     maquette = await maquette.update(maquetteUpdate).exec();
-    return maquette;
+    return (await this.findById(id)).get();
   }
 
   async lockById(id: string): Promise<Maquette> {
