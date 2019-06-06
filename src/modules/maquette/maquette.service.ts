@@ -84,7 +84,7 @@ export class MaquetteService {
         inProduction: true,
       })
       .exec();
-    return this.maquetteModel.findById(id).exec();
+    return (await this.findById(id)).get();
   }
 
   async unlockById(id: string): Promise<Maquette> {
@@ -96,7 +96,7 @@ export class MaquetteService {
         inProduction: false,
       })
       .exec();
-    return this.maquetteModel.findById(id).exec();
+    return (await this.findById(id)).get();
   }
 
   async findById(id: any): Promise<Optional<Maquette>> {
