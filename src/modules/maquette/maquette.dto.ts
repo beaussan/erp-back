@@ -58,6 +58,10 @@ class CourseDTO {
   @IsString()
   englishTranslation: string;
 
+  @ApiModelProperty({ example: 'Nicolas GOUVY' })
+  @IsString()
+  teacher: string;
+
   @ApiModelProperty({ example: false })
   @IsBoolean()
   ratrappage: boolean;

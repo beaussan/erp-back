@@ -17,6 +17,7 @@ const CourseSchema = new Schema({
   examType: { type: String },
   courseEnglish: { type: Boolean },
   englishTranslation: { type: String },
+  teacher: { type: String },
   ratrappage: { type: Boolean },
 });
 CourseSchema.virtual('totalProf').get(function() {
