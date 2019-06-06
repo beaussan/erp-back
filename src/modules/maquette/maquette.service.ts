@@ -42,7 +42,7 @@ export class MaquetteService {
     await master.update({
       maquettes: [...master.maquettes, maquette.id],
     });
-    return maquette;
+    return (await this.findById(maquette.id)).get();
   }
 
   async updateOne(id: string, maquetteUpdate: MaquetteDTO): Promise<Maquette> {
