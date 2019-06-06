@@ -118,6 +118,8 @@ const ExtraGroupItemSchema = new Schema({
   hour: { type: Number, default: 0 },
   date: { type: String },
 });
+ExtraGroupItemSchema.set('toObject', { virtuals: true });
+ExtraGroupItemSchema.set('toJSON', { virtuals: true });
 
 const ExtraGroupSchema = new Schema({
   name: { type: String, required: true },
