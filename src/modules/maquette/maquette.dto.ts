@@ -73,7 +73,6 @@ class ModuleDTO {
   name: string;
 
   @ApiModelProperty({ isArray: true, type: CourseDTO })
-  @ValidateNested()
   @IsArray()
   courses: CourseDTO[];
 }
@@ -84,7 +83,6 @@ class SemesterDTO {
   number: number;
 
   @ApiModelProperty({ isArray: true, type: ModuleDTO })
-  @ValidateNested()
   @IsArray()
   modules: ModuleDTO[];
 }
@@ -109,7 +107,6 @@ class ExtraGroupDTO {
   name: string;
 
   @ApiModelProperty({ isArray: true, type: ExtraGroupItemDTO })
-  @ValidateNested()
   @IsArray()
   items: ExtraGroupItemDTO[];
 }
@@ -120,12 +117,10 @@ class YearDTO {
   level: string;
 
   @ApiModelProperty({ isArray: true, type: SemesterDTO })
-  @ValidateNested()
   @IsArray()
   semesters: SemesterDTO[];
 
   @ApiModelProperty({ isArray: true, type: ExtraGroupDTO })
-  @ValidateNested()
   @IsArray()
   extras: ExtraGroupDTO[];
 }
@@ -140,6 +135,5 @@ export class MaquetteDTO {
   master: string;
 
   @ApiModelProperty({ isArray: true, type: YearDTO })
-  @IsArray()
   years: YearDTO[];
 }

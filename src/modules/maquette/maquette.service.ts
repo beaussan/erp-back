@@ -71,7 +71,9 @@ export class MaquetteService {
         maquettes: oldMaster.maquettes.filter(val => val !== maquette.id),
       });
     }
-    maquette = await maquette.update(maquetteUpdate).exec();
+    maquette = await this.maquetteModel
+      .update({ _id: id }, { ...maquetteUpdate })
+      .exec();
     return (await this.findById(id)).get();
   }
 

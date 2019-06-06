@@ -49,9 +49,10 @@ async function bootstrap() {
 
   // Validators
 
-  app.useGlobalPipes(
-    new ValidatorPipe(), // Validate inputs
-  );
+  app
+    .useGlobalPipes
+    // new ValidatorPipe(), // Validate inputs
+    ();
 
   // Swagger
   const options = new DocumentBuilder()
