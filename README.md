@@ -1,6 +1,6 @@
 # Erp back
 
-[![CircleCI](https://circleci.com/gh/beaussart/erp-back/tree/master.svg?style=svg)](https://circleci.com/gh/beaussart/erp-back/tree/master)
+[![CircleCI](https://circleci.com/gh/beaussan/erp-back/tree/master.svg?style=svg)](https://circleci.com/gh/beaussan/erp-back/tree/master)
 
 ## Description
 
