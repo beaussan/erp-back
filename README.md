@@ -11,7 +11,7 @@ it's purpose is to help manager and have an archive of old masters maquettes and
 ## Installation
 
 ```bash
-$ npm install
+$ npm install 
 $ cp example.env .env
 ```
 
